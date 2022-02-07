@@ -65,7 +65,8 @@ h1 {
   background-position: center;
   border-radius: 10px;
   box-shadow: 0 3px 15px rgba(100, 100, 100, 0.5);
-
+  margin-left: 50px;
+  margin-right: 50px;
 }
 
 .type {
@@ -93,6 +94,10 @@ h1 {
   left: 50%;
 }
 
+#load {
+  margin-bottom: 25px;
+}
+
 .card-container {
   position: relative;
   width: 100%;
@@ -103,7 +108,7 @@ h1 {
 }
 
 .flip-card:hover .card-container {
-  transform: rotateY(180deg);
+  transform: scale(1.1) rotateY(180deg);
 }
 
 .pokemon-block,
@@ -130,8 +135,4 @@ h1 {
   text-transform: capitalize;
   font-weight: bold;
   font-size: 0.8rem;
-}
-
-.button-bar {
-  margin-bottom: 25px;
 }
