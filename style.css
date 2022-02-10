@@ -22,6 +22,12 @@ h1 {
   box-shadow: 0 3px 15px rgba(100, 100, 100, 0.5);
 }
 
+.form-inline {
+  margin-top: 20px;
+  display:inline-flex;
+  /* grid-template-columns: 1fr 1fr; */
+}
+
 .pokemon-container {
   display: grid;
   /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
@@ -65,8 +71,9 @@ h1 {
   background-position: center;
   border-radius: 10px;
   box-shadow: 0 3px 15px rgba(100, 100, 100, 0.5);
-  margin-left: 50px;
-  margin-right: 50px;
+  width: 100px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .type {
@@ -81,17 +88,17 @@ h1 {
   font-weight: bold;
   background-color: rgb(255, 255, 255);
   background-position: center;
+  width: 55px;
   border-radius: 10px;
-  margin-left: 100px;
-  margin-right: 100px;
+  margin-left: auto;
+  margin-right: auto;
   box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
 }
 
 #spinner {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
+    position: fixed;
+    top: 50%;
+    left: 50%; 
 }
 
 #load {

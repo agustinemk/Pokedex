@@ -1,7 +1,7 @@
 const pokemon_container = document.querySelector(".pokemon-container");
 const spinner = document.querySelector("#spinner");
-
-const load = document.querySelector("#load");
+const search_button = document.querySelector("#search-button")
+const input = document.querySelector("#input");
 
 let offset = 1;
 let limit = 20;
@@ -26,21 +26,48 @@ const types_colours = {
     default: '#9CF2FB',
 };
 
-function block_load_button() {
-	load.disabled = true;
-	load.textContent = "Cargando...";
+function remove_children_nodes(parent) {
+	offset = 1
+	while (parent.firstChild) {
+		parent.removeChild(parent.firstChild);
+	}
 }
 
-function unblock_load_button() {
-	load.disabled = false;
-	load.textContent = "Cargar más!";
+window.onload = async function() {
+	await fetch_pokemons();
 }
 
-load.addEventListener("click", () => {
-	offset += limit;
-	block_load_button();
-	fetch_pokemons(offset, limit);
-})
+let scrolling = false;
+window.onscroll = async function() {
+	if (scrolling == false) {
+		if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
+			scrolling = true;
+			await fetch_pokemons();
+			scrolling = false;
+		}
+	}
+};
+
+search_button.addEventListener("click", async function() {
+	let id = input.value.toLowerCase();
+
+	remove_children_nodes(pokemon_container);
+	await fetch_pokemon(id);
+});
+
+input.addEventListener("keyup", async function(event) {
+	event.preventDefault();
+	if (event.keyCode === 13) {
+		if (input.value === "") {
+			offset = 1;
+			remove_children_nodes(pokemon_container);
+			await fetch_pokemons();
+			return;
+		}
+		search_button.click();
+	}
+
+});
 
 async function fetch_pokemon(id) {
 	await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
@@ -51,13 +78,13 @@ async function fetch_pokemon(id) {
 	});
 }
 
-async function fetch_pokemons(offset, limit) {
+async function fetch_pokemons() {
 	spinner.style.display = "block";
 	for (let i = offset; i < offset+limit; i++) {
 		await fetch_pokemon(i);
 	}
+	offset += limit;
 	spinner.style.display = "none"; //turn off loading spinner
-	unblock_load_button();
 }
 
 async function create_pokemon(pokemon) {
@@ -187,5 +214,3 @@ function progress_bar(stats) {
 	})
 	return stats_container;
 }
-
-fetch_pokemons(offset, limit);
